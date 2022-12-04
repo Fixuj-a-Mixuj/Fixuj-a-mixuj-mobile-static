@@ -1,0 +1,37 @@
+<html>
+<body>
+    <div id="contentContainer">
+        <img src="sekvence_fotek/photo-1.png">
+    </div>
+    <script>
+        // Create the content container for the photos
+        const contentContainer = document.createElement('div');
+        contentContainer.id = 'contentContainer';
+        document.body.appendChild(contentContainer);
+
+        // Create 23 img elements and add them to the contentContainer
+        for (let i = 0; i < 23; i++) {
+            const photo = document.createElement('img');
+            photo.src = `sekvence_fotek/photo-${i}.png`;
+            contentContainer.appendChild(photo);
+        }
+
+        // Create the scroll event listener
+        window.addEventListener('scroll', () => {
+            // Get the current scroll position
+            const scrollPos = window.pageYOffset;
+
+            // Loop through all the photos
+            const photos = document.querySelectorAll('#contentContainer img');
+            photos.forEach((photo, index) => {
+                // Calculate the top offset for the photo
+                const photoTopOffset = index * window.innerHeight;
+
+                // If the scroll position is greater than the photo's top offset, set the photo's src 
+                if (scrollPos > photoTopOffset) {
+                    photo.src = `sekvence_fotek/photo-${index}.png`;
+                }
+            });
+        });
+    </script>
+</body></html>
