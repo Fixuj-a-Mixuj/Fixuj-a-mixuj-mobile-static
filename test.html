@@ -1,37 +1,51 @@
 <html>
-<body>
-    <div id="contentContainer">
-        <img src="sekvence_fotek/photo-1.png">
-    </div>
-    <script>
-        // Create the content container for the photos
-        const contentContainer = document.createElement('div');
-        contentContainer.id = 'contentContainer';
-        document.body.appendChild(contentContainer);
 
-        // Create 23 img elements and add them to the contentContainer
-        for (let i = 0; i < 23; i++) {
-            const photo = document.createElement('img');
-            photo.src = `sekvence_fotek/photo-${i}.png`;
-            contentContainer.appendChild(photo);
+<body>
+    <img src="sekvence_fotek/photo1.png" id="image">
+    <script>
+        // Define the photos array with the URLs of the photos to display
+        const photos = [];
+
+        // Loop through the photos in the sequence_fotek folder
+        for (let i = 1; i <= 24; i++) {
+            // Add the URL of the current photo to the photos array
+            photos.push(`sekvence_fotek/photo${i}.png`);
         }
 
-        // Create the scroll event listener
-        window.addEventListener('scroll', () => {
-            // Get the current scroll position
-            const scrollPos = window.pageYOffset;
+        // Define the starting index of the photos array
+        let currentIndex = 0;
 
-            // Loop through all the photos
-            const photos = document.querySelectorAll('#contentContainer img');
-            photos.forEach((photo, index) => {
-                // Calculate the top offset for the photo
-                const photoTopOffset = index * window.innerHeight;
+        // Define the image element to display the photos
+        const imageElement = document.getElementById("image");
 
-                // If the scroll position is greater than the photo's top offset, set the photo's src 
-                if (scrollPos > photoTopOffset) {
-                    photo.src = `sekvence_fotek/photo-${index}.png`;
+        // Define the function to handle the scroll event
+        function handleScroll(event) {
+            // Check if the user has scrolled down
+            if (event.deltaY > 0) {
+                // Increment the current index of the photos array
+                currentIndex++;
+
+                // Check if the current index is out of bounds
+                if (currentIndex >= photos.length) {
+                    // Reset the current index to 0 if it's out of bounds
+                    currentIndex = 0;
                 }
-            });
-        });
+            } else {
+                // Decrement the current index of the photos array
+                currentIndex--;
+
+                // Check if the current index is out of bounds
+                if (currentIndex < 0) {
+                    // Set the current index to the last element of the photos array if it's out of bounds
+                    currentIndex = photos.length - 1;
+                }
+            }
+
+            // Set the src attribute of the image element to the URL of the current photo
+            imageElement.src = photos[currentIndex];
+        }
+
+        // Listen for the scroll event on the document
+        document.addEventListener("scroll", handleScroll);
     </script>
 </body></html>
